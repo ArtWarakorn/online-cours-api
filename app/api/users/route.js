@@ -18,12 +18,12 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { email, password, full_name, role } = body;
+        const { id, email, password, full_name, role } = body;
 
         const { data, error } = await supabase
             .schema('classroom')
             .from("users")
-            .insert([{ email, password, full_name, role }])
+            .insert([{ id, email, password, full_name, role }])
             .select()
             .single();
 
