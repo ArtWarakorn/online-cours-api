@@ -1,40 +1,41 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
-// GET /api/users/:id
+// GET /api/courses/:id
 export async function GET(req, { params }) {
     const { id } = await params;
 
     const { data, error } = await supabase
         .schema('classroom')
-        .from("users")
-        .select("*")
+        .from("courses")
+        .select("*, users(full_name)")
         .eq("id", id)
         .single();
 
     if (error) {
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
+        return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
 
     return NextResponse.json(data);
 }
 
-// PUT /api/users/:id
+// PUT /api/courses/:id
 export async function PUT(request, { params }) {
     try {
         const { id } = await params;
         const body = await request.json();
 
-        const { email, password, full_name, role } = body;
+        const { instructor_id, title, description, thumbnail_url, is_published } = body;
 
         const { data, error } = await supabase
             .schema('classroom')
-            .from("users")
+            .from("courses")
             .update({
-                email,
-                password,
-                full_name,
-                role
+                instructor_id,
+                title,
+                description,
+                thumbnail_url,
+                is_published
             })
             .eq("id", id)
             .select()
@@ -50,14 +51,14 @@ export async function PUT(request, { params }) {
     }
 }
 
-// DELETE /api/users/:id
+// DELETE /api/courses/:id
 export async function DELETE(_request, { params }) {
     try {
         const { id } = await params;
 
         const { error } = await supabase
             .schema('classroom')
-            .from("users")
+            .from("courses")
             .delete()
             .eq("id", id);
 
