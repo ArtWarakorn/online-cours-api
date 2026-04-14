@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase'
 
+//วิธีเรียก GET /api/quizzes?lesson_id=3
+
 export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const lesson_id = searchParams.get('lesson_id')
