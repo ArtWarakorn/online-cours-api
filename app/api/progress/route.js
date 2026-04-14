@@ -1,5 +1,8 @@
 import { supabase } from '@/lib/supabase'
 
+//วิธีเรียก
+// GET /api/progress?student_id=1
+
 export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const student_id = searchParams.get('student_id')
