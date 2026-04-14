@@ -6,7 +6,8 @@ export async function GET(request) {
     const { data, error } = await supabase
         .schema('classroom')
         .from('users')
-        .select('*');
+        .select('*')
+        .order('id')
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
